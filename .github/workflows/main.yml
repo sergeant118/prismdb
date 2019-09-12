@@ -1,0 +1,13 @@
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: node:latest
+    steps:
+    - uses: actions/checkout@master
+    - working-directory: csv2rdf
+      run: | 
+        npm ci
+        npm start
+
