@@ -4,27 +4,18 @@
 
 ## Environment
 
-- docker
-- docker-compose
-
-または
-
 - node(新しめのやつ)
 - npm(新しめのやつ)
 
 ## Usage
 
 ```bash
-# ローカルでサーバが立ち上がります(http://localhost)
-$ docker-compose -f ../docker-compose.dev.yml up
-```
-
-または
-
-```bash
 # 依存パッケージのインストール
 $ npm i
 
-# ローカルでサーバが立ち上がります(http://localhost)
+# 環境変数の設定
+$ export SPARQL_ENDPOINT_URL=https://prismdb.takanakahiko.me/sparql
+
+# ローカルでサーバが立ち上がります(http://localhost:3000)
 $ npm run dev
 ```

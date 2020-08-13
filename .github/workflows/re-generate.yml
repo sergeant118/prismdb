@@ -1,0 +1,30 @@
+name: re-generate
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'
+
+jobs:
+  re-generate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - working-directory: csv2rdf
+      run: |
+        npm ci
+        $(npm bin)/ts-node tools/update-shops-prichan.ts
+        $(npm bin)/ts-node tools/update-shops-pripara.ts
+    - uses: tibdex/github-app-token@v1
+      id: generate-token
+      with:
+        app_id: ${{ secrets.GH_APPS_ID }}
+        private_key: ${{ secrets.GH_APPS_PRIVATE_KEY }}
+    - uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ steps.generate-token.outputs.token }}
+        committer: GitHub <noreply@github.com>
+        title: 'お店情報のアップデート'
+        body: |
+          お店情報の自動アップデートです！ #274
+        labels: |
+          automerge

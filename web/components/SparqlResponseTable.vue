@@ -11,8 +11,12 @@
           :href="
             props.row[col].value.replace('https://prismdb.takanakahiko.me', '')
           "
-          >{{ props.row[col].value }}</a
-        >
+        >{{ props.row[col].value
+          .replace('https://prismdb.takanakahiko.me/prism-schema.ttl#', 'prism:')
+          .replace('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:')
+          .replace('http://www.w3.org/2000/01/rdf-schema#', 'rdfs:')
+          .replace('https://prismdb.takanakahiko.me', '')
+        }}</a>
         <span v-else>{{ props.row[col].value }}</span>
       </b-table-column>
     </template>
@@ -20,7 +24,7 @@
       <section class="section">
         <div class="content has-text-grey has-text-centered">
           <p>
-            <b-icon icon="emoticon-sad" size="is-large"></b-icon>
+            <b-icon icon="emoticon-sad" size="is-large" />
           </p>
           <p>Nothing here.</p>
         </div>
@@ -29,15 +33,17 @@
   </b-table>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue, { PropType } from 'vue'
+import { SparqleResponse } from '~/types/SparqleResponse.d.ts'
+export default Vue.extend({
   props: {
     response: {
-      type: Object,
+      type: Object as PropType<SparqleResponse>,
       required: true
     }
   }
-}
+})
 </script>
 
 <style scoped>

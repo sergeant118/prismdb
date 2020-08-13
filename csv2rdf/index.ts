@@ -2,7 +2,7 @@ import Csv2rdf from './csv2rdf'
 import * as fs from 'fs'
 import * as rimraf from 'rimraf'
 
-(async () => {
+const main = async () => {
   // virtuosoディレクトリを削除し，virtuoso/toLoadディレクトリを作成
   if(fs.existsSync('../virtuoso/data')) rimraf.sync('../virtuoso/data')
   fs.mkdirSync('../virtuoso/data')
@@ -35,5 +35,16 @@ import * as rimraf from 'rimraf'
   await csv2rdf.load('../_data/live/prr-lives-setting.json')
   await csv2rdf.load('../_data/item/prichan-items-setting.json')
   await csv2rdf.load('../_data/shop/prichan-shop-setting.json')
+  await csv2rdf.load('../_data/shop/pripara-shop-setting.json')
+  await csv2rdf.load('../_data/team/pripara-teams-setting.json')
+  await csv2rdf.load('../_data/team/prichan-teams-setting.json')
+  await csv2rdf.load('../_data/brand/brands-setting.json')
   await csv2rdf.export('../virtuoso/data/toLoad/output.ttl')
+}
+
+(async () => {
+  await main().catch(e => {
+    console.error(e)
+    process.exit(1);
+  })
 })()
